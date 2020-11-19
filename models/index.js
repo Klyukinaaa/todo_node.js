@@ -1,14 +1,17 @@
-const {Sequelize} = require('sequelize');
+const {Sequelize} = require("sequelize");
 
 const sequelize = new Sequelize("todo", "postgres", "user", {
     dialect: "postgres",
+    define: {
+        timestamps: false
+    }
 });
 
-const User = require('./User')(sequelize);
-const Todo = require('./Todo')(sequelize);
+const User = require("./User")(sequelize);
+const Todo = require("./Todo")(sequelize);
 
 //внешний ключ
-User.hasMany(Todo, { foreignKey: 'id_user'});
+User.hasMany(Todo, { foreignKey: "id_user"});
 
 module.exports = {
     sequelize: sequelize,
@@ -19,7 +22,7 @@ module.exports = {
 //sync() синхронизирует структуру базы данных с определением моделей
 //если для какой-то модели отстуствует соотв. таблица в БД, то эта таблица создается
 //force удалить таблицы и создать их заново, но уже с нужной нам структурой
-sequelize.sync({force: true});
+sequelize.sync();
 
 
 

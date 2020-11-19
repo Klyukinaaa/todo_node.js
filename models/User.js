@@ -11,10 +11,13 @@ module.exports = function (sequelize) {
         email: {
             type: Sequelize.STRING,
             allowNull: false,
+            require: true, //обязательно поле
+            unique: true //уникальный email
         },
         password: {
-            type: Sequelize.INTEGER,
+            type: Sequelize.STRING,
             allowNull: false,
+            require: true
         }
     })
 }
