@@ -1,5 +1,7 @@
 module.exports.getItemById = function (request, response) {
-    response.send(`get Todo ${request.params.id}`);
+    response.json({
+        message: "Items"
+    });
 };
 module.exports.deleteItemById = function (request, response) {
     response.send(`delete Todo ${request.params.id}`);

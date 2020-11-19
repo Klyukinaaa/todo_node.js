@@ -23,7 +23,6 @@ module.exports.login = async function (request, response) {
             response.status(200).json({
                 token: `Bearer ${token}`
             })
-
         } else {
             //пароли не совпали
             response.status(401).json({
