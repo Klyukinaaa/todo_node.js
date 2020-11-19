@@ -1,7 +1,8 @@
 const jwt = require('jsonwebtoken');
 const db = require("../models/index");
-const keys = require("../config/keys")
+const keys = require("../config/keys");
 const User = db.user;
+const errorHandler = require("../utils/errorHandler");
 
 module.exports.login = async function (request, response) {
     const email = request.body.email;
@@ -56,7 +57,7 @@ module.exports.register = async function (request, response) {
             password: password
         }).then((result) => {
             response.status(201).json(result);
-        }).catch(err => console.log(err)); //обработать ошибку
+        }).catch(err => errorHandler(response, err)); //обработать ошибку
     }
 }
 
