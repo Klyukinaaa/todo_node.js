@@ -19,7 +19,7 @@ module.exports.login = async function (request, response) {
             const token = jwt.sign({ // метод авторизации
                 email: candidate.email, //объект, который хотим зашифровать в токене
                 id: candidate.id
-            }, keys.jwt, {expiresIn: 60 * 60})
+            }, keys.jwt, {expiresIn: 60 * 60});
 
             response.status(200).json({
                 token: `Bearer ${token}`

@@ -5,12 +5,16 @@ const passport = require("passport");
 const itemsRouter = express.Router(); // определяем роутеры
 
 // определяем маршруты и их обработчики внутри роутера itemsRouter
-// модуль позволяет вам аутентифицировать конечные точки с помощью веб-токена JSON
-itemsRouter.get("/:id", passport.authenticate("jwt", { session: false },), itemController.getItemById);
-itemsRouter.delete("/:id", itemController.deleteItemById);
-itemsRouter.put("/:id", itemController.putItemById);
 
-itemsRouter.get("/", itemController.getItems);
-itemsRouter.post("/", itemController.postItems);
+//получение всех задач
+//модуль позволяет вам аутентифицировать конечные точки с помощью веб-токена JSON
+itemsRouter.get("/", passport.authenticate("jwt", { session: false },), itemController.getItems);
+//создание новых задач
+itemsRouter.post("/", passport.authenticate("jwt", { session: false },), itemController.create);
+
+//удалить задачу
+itemsRouter.delete("/:id", passport.authenticate("jwt", { session: false },), itemController.remove);
+//обновить задачу
+itemsRouter.patch("/:id", passport.authenticate("jwt", { session: false },), itemController.update);
 
 module.exports = itemsRouter;

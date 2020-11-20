@@ -1,6 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const passport = require("passport")
+const passport = require("passport");
 const itemsRouter = require("./routes/itemRouter.js");
 const homeRouter = require("./routes/homeRouter.js");
 

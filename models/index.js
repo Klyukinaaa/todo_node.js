@@ -11,7 +11,7 @@ const User = require("./User")(sequelize);
 const Todo = require("./Todo")(sequelize);
 
 //внешний ключ
-User.hasMany(Todo, { foreignKey: "id_user"});
+User.hasMany(Todo, { foreignKey: "user"});
 
 module.exports = {
     sequelize: sequelize,
@@ -23,7 +23,6 @@ module.exports = {
 //если для какой-то модели отстуствует соотв. таблица в БД, то эта таблица создается
 //force удалить таблицы и создать их заново, но уже с нужной нам структурой
 sequelize.sync();
-
 
 
 
