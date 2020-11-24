@@ -1,6 +1,6 @@
 const db = require("../models/index");
 const Item = db.todo;
-const errorHandler = require('../utils/errorHandler');
+const errorHandler = require("../utils/errorHandler");
 
 //список задач юзера
 module.exports.getItems = async function (request, response) {
@@ -11,7 +11,6 @@ module.exports.getItems = async function (request, response) {
                 user: request.user.id //поиск по юзеру
             }
         })
-        console.log(request.user)
         response.status(201).json(items);
     } catch (err) {
         errorHandler(response, err)
@@ -19,40 +18,51 @@ module.exports.getItems = async function (request, response) {
 };
 
 //создание новых задач
-module.exports.create = function (request, response) {
-    Item.create({
-        user: request.user.id,
-        task: request.body.task,
-        completed: request.body.completed
-    }).then((result) => {
-        response.status(201).json(result);
-    }).catch(err => errorHandler(response, err)); //обработать ошибку
+module.exports.create = async function (request, response) {
+    try {
+        const item = await Item.create({
+            user: request.user.id,
+            task: request.body.task,
+            completed: request.body.completed
+        });
+        response.status(201).json(item);
+    } catch (err) {
+        errorHandler(response, err);  //обработать ошибку
+    }
 };
 
 //удалить задачу
-module.exports.remove = function (request, response) {
-    Item.destroy({
-        where: {
-            id: request.params.id
-        }
-    }).then(() => {
+module.exports.remove = async function (request, response) {
+    try {
+        await Item.destroy({
+            where: {
+                id: request.params.id
+            }
+        });
         response.status(201).json({
-            message: "Задача была удалена."
-        })
-    }).catch(err => errorHandler(response, err)); //обработать ошибку
+            message: "The task has been deleted."
+        });
+    } catch (err) {
+        errorHandler(response, err)
+    }
 };
 
 //обновить задачу
-module.exports.update = function (request, response) {
-    Item.update({
-        task: request.body.task,
-        completed: request.body.completed
-    }, {
-        where: {
-            id: request.params.id
-        }
-    }).then((result) => {
-        response.status(201).json(result);
-    }).catch(err => errorHandler(response, err)); //обработать ошибку
+module.exports.update = async function (request, response) {
+    try {
+        await Item.update({
+                task: request.body.task,
+                completed: request.body.completed
+            }, {
+            where: {
+                id: request.params.id
+            }
+        });
+        response.status(201).json({
+            message: "Task updated."
+        });
+    } catch (err) {
+        errorHandler(response, err)
+    }
 };
 

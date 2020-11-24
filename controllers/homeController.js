@@ -1,4 +1,4 @@
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 const db = require("../models/index");
 const keys = require("../config/keys");
 const User = db.user;
@@ -22,18 +22,18 @@ module.exports.login = async function (request, response) {
             }, keys.jwt, {expiresIn: 60 * 60});
 
             response.status(200).json({
-                token: `Bearer ${token}`
+                token: token                       // (`Bearer`)
             })
         } else {
             //пароли не совпали
             response.status(401).json({
-                message: "Пароли не совпадают. Попробуйте снова"
+                message: "Passwords do not match. Try again."
             })
         }
     } else {
         //пользователя нет, ошибка
         response.status(404).json({
-            message: "Пользователь с таким email не найден"
+            message: "User with this email was not found."
         })
     }
 };
@@ -48,7 +48,7 @@ module.exports.register = async function (request, response) {
 
     if (candidate) {
         response.status(409).json({
-            message: "Пользователь с указанным email уже существует!"
+            message: "The user with the specified email already exists!"
         })
     } else {
         //создание нового пользователя
